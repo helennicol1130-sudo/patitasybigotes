@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diviértete y Distráete - Juegos</title>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b0f1c 0%, #1a1f33 100%);
+            min-height: 100vh;
+            color: #f0f3fa;
+            padding: 20px;
+        }
+
+        /* Contenedor principal */
+        .app {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background: rgba(20, 25, 45, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(255, 215, 100, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 220, 120, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: #ffd966;
+            filter: drop-shadow(0 0 12px #ffb347);
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffe484, #ffb347, #ff8c42);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 180, 60, 0.5);
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #b9c2e0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-left: 2px solid #ffb347;
+            padding-left: 15px;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #e0e6ff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: #ffd966;
+            border-bottom-color: #ffd966;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin: 30px 0 50px;
+            padding: 40px 20px;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 200, 70, 0.1), transparent 70%);
+            border-radius: 80px;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #ffd966, #ffaa33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 5px 20px rgba(255, 200, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #ccd6f0;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+            border-radius: 40px;
+        }
+
+        /* Grid de juegos */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+
+        .game-card {
+            background: rgba(22, 28, 48, 0.9);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 25px 20px 20px;
+            box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 210, 90, 0.15);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid rgba(255, 200, 80, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 50px -12px rgba(255, 180, 0, 0.25), 0 0 0 1px rgba(255, 210, 90, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .card-header i {
+            font-size: 2.5rem;
+            color: #ffb347;
+            background: rgba(255, 180, 70, 0.12);
+            padding: 10px;
+            border-radius: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #fff4e0;
+        }
+
+        .game-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        /* Estilos específicos para cada juego */
+        .word-display {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 10px;
+            color: #ffd966;
+            text-shadow: 0 0 15px #ffb347;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            min-height: 30px;
+            color: #b9c2e0;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .btn {
+            background: linear-gradient(145deg, #2a314b, #1b2138);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 26px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #f0f3fa;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 210, 90, 0.2);
+            margin: 6px 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #38405e, #232b48);
+            color: #ffd966;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), 0 0 0 1px #ffb347;
+            transform: scale(1.02);
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #ffb347, #ff8c42);
+            color: #12172b;
+            font-weight: 700;
+            box-shadow: 0 8px 20px #ff8c4260;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(145deg, #ffc55c, #ff9f4b);
+            color: #0b0f1c;
+            box-shadow: 0 10px 25px #ffb347;
+        }
+
+        .input-field {
+            background: #0e1322;
+            border: 2px solid #2e3852;
+            border-radius: 50px;
+            padding: 12px 20px;
+            color: white;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+            font-weight: 600;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: #ffb347;
+            box-shadow: 0 0 15px #ffb34750;
+        }
+
+        /* Tarjeta de memoria */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .memory-card {
+            width: 60px;
+            height: 60px;
+            background: #232b48;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 5px 0 #0b0f1c;
+            border: 1px solid #3e4a6b;
+            color: #ffd966;
+        }
+
+        .memory-card.flipped {
+            background: #ffd966;
+            color: #1a1f33;
+            box-shadow: 0 0 20px #ffb347;
+        }
+
+        .memory-card.matched {
+            background: #34c759;
+            color: #0b0f1c;
+            cursor: default;
+            box-shadow: 0 0 20px #34c759;
+            border-color: #34c759;
+        }
+
+        .memory-card:active:not(.flipped):not(.matched) {
+            transform: scale(0.95);
+        }
+
+        /* Adivinanza */
+        .hint-box {
+            background: #0d1221;
+            border-radius: 30px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            border-left: 6px solid #ffb347;
+            font-size: 1rem;
+            color: #cbd5f0;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #7a86aa;
+            border-top: 1px solid #2b3350;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+
+        footer i {
+            color: #ffb347;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                border-radius: 40px;
+                padding: 20px;
+            }
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            .hero h2 {
+                font-size: 2.4rem;
+            }
+            .memory-card {
+                width: 50px;
+                height: 50px;
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .memory-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .memory-card {
+                width: 45px;
+                height: 45px;
+                font-size: 1.4rem;
+            }
+            .word-display {
+                font-size: 1.8rem;
+                letter-spacing: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>Diviértete y Distráete</h1>
+            </div>
+            <div class="tagline">juega · ríe · relájate</div>
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#"><i class="fas fa-dice"></i> Juegos</a>
+                <a href="#"><i class="fas fa-heart"></i> Favoritos</a>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <h2>¿Listo para divertirte?</h2>
+            <p>Tres juegos rápidos para distraerte y pasar un buen rato. ¡Sin complicaciones!</p>
+        </section>
+
+        <!-- Grid de juegos -->
+        <div class="games-grid">
+            <!-- Juego 1: Ahorcado (versión simplificada) -->
+            <div class="game-card" id="game-hangman">
+                <div class="card-header">
+                    <i class="fas fa-spell-check"></i>
+                    <h3>Ahorcado</h3>
+                </div>
+                <div class="game-area">
+                    <div class="word-display" id="hangmanWord">_ _ _ _ _</div>
+                    <div class="message" id="hangmanMessage">Adivina la palabra secreta</div>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+                        <input type="text" id="hangmanInput" class="input-field" placeholder="Letra" maxlength="1" style="width: 100px; text-transform: uppercase;">
+                        <button class="btn btn-primary" id="hangmanGuessBtn"><i class="fas fa-search"></i> Probar</button>
+                    </div>
+                    <button class="btn" id="hangmanResetBtn" style="margin-top: 8px;"><i class="fas fa-rotate-right"></i> Nueva palabra</button>
+                    <div style="font-size: 0.9rem; color: #8a94b8; margin-top: 10px;">Intentos: <span id="hangmanAttempts">6</span></div>
+                </div>
+            </div>
+
+            <!-- Juego 2: Memoria (emoji) -->
+            <div class="game-card" id="game-memory">
+                <div class="card-header">
+                    <i class="fas fa-brain"></i>
+                    <h3>Memoria</h3>
+                </div>
+                <div class="game-area">
+                    <div class="memory-grid" id="memoryGrid">
+                        <!-- se genera con JS -->
+                    </div>
+                    <div class="message" id="memoryMessage">Encuentra las parejas</div>
+                    <button class="btn" id="memoryResetBtn"><i class="fas fa-rotate-right"></i> Reiniciar</button>
+                </div>
+            </div>
+
+            <!-- Juego 3: Adivinanza -->
+            <div class="game-card" id="game-riddle">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>Adivinanza</h3>
+                </div>
+                <div class="game-area">
+                    <div class="hint-box" id="riddleText">Presiona "Nueva" para empezar</div>
+                    <div class="message" id="riddleMessage"></div>
+                    <input type="text" id="riddleInput" class="input-field" placeholder="Tu respuesta" style="width: 100%; max-width: 220px; margin: 10px 0;">
+                    <div>
+                        <button class="btn btn-primary" id="riddleCheckBtn"><i class="fas fa-check"></i> Comprobar</button>
+                        <button class="btn" id="riddleNewBtn"><i class="fas fa-lightbulb"></i> Nueva</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p><i class="fas fa-heart"></i> Disfruta, aprende y distráete · Diviértete y Distráete &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== JUEGO 1: AHORCADO ====================
+            const hangmanWords = ["SOL", "LUNA", "ESTRELLA", "CIELO", "MAR", "FUEGO", "TIERRA", "VIENTO", "NUBE", "FLOR"];
+            let currentWord = "";
+            let guessedLetters = [];
+            let attemptsLeft = 6;
+            let gameOver = false;
+
+            const hangmanWordEl = document.getElementById('hangmanWord');
+            const hangmanMessageEl = document.getElementById('hangmanMessage');
+            const hangmanAttemptsEl = document.getElementById('hangmanAttempts');
+            const hangmanInput = document.getElementById('hangmanInput');
+            const hangmanGuessBtn = document.getElementById('hangmanGuessBtn');
+            const hangmanResetBtn = document.getElementById('hangmanResetBtn');
+
+            function initHangman() {
+                const randomIndex = Math.floor(Math.random() * hangmanWords.length);
+                currentWord = hangmanWords[randomIndex];
+                guessedLetters = [];
+                attemptsLeft = 6;
+                gameOver = false;
+                updateHangmanDisplay();
+                hangmanMessageEl.textContent = "Adivina la palabra secreta";
+                hangmanMessageEl.style.color = "#b9c2e0";
+                hangmanInput.value = '';
+                hangmanInput.disabled = false;
+                hangmanGuessBtn.disabled = false;
+            }
+
+            function updateHangmanDisplay() {
+                let display = '';
+                for (let letter of currentWord) {
+                    if (guessedLetters.includes(letter)) {
+                        display += letter + ' ';
+                    } else {
+                        display += '_ ';
+                    }
+                }
+                hangmanWordEl.textContent = display.trim();
+                hangmanAttemptsEl.textContent = attemptsLeft;
+
+                // Comprobar victoria
+                const wordGuessed = currentWord.split('').every(letter => guessedLetters.includes(letter));
+                if (wordGuessed && !gameOver) {
+                    gameOver = true;
+                    hangmanMessageEl.textContent = "🎉 ¡Ganaste! La palabra era: " + currentWord;
+                    hangmanMessageEl.style.color = "#a3e4a3";
+                    hangmanInput.disabled = true;
+                    hangmanGuessBtn.disabled = true;
+                }
+            }
+
+            function handleHangmanGuess() {
+                if (gameOver) return;
+                let letter = hangmanInput.value.trim().toUpperCase();
+                if (!letter || letter.length !== 1 || !/[A-ZÑ]/.test(letter)) {
+                    hangmanMessageEl.textContent = "⚠️ Ingresa una letra válida (A-Z)";
+                    hangmanMessageEl.style.color = "#ffb3b3";
+                    hangmanInput.value = '';
+                    return;
+                }
+                if (guessedLetters.includes(letter)) {
+                    hangmanMessageEl.textContent = "🔄 Ya probaste esa letra";
+                    hangmanMessageEl.style.color = "#ffd966";
+                    hangmanInput.value = '';
+                    return;
+                }
+
+                guessedLetters.push(letter);
+
+                if (!currentWord.includes(letter)) {
+                    attemptsLeft--;
+                    hangmanMessageEl.textContent = `❌ Letra incorrecta. Te quedan ${attemptsLeft} intentos.`;
+                    hangmanMessageEl.style.color = "#ffb3b3";
+                } else {
+                    hangmanMessageEl.textContent = `✅ ¡Bien! La letra "${letter}" está en la palabra.`;
+                    hangmanMessageEl.style.color = "#a3e4a3";
+                }
+
+                hangmanInput.value = '';
+
+                if (attemptsLeft <= 0) {
+                    gameOver = true;
+                    hangmanMessageEl.textContent = `💀 Perdiste. La palabra era: ${currentWord}`;
+                    hangmanMessageEl.style.color = "#ff8a8a";
+                    hangmanInput.disabled = true;
+                    hangmanGuessBtn.disabled = true;
+                }
+
+                updateHangmanDisplay();
+
+                // Si después de actualizar ya se ganó, se muestra el mensaje correspondiente
+                if (!gameOver && currentWord.split('').every(l => guessedLetters.includes(l))) {
+                    gameOver = true;
+                    hangmanMessageEl.textContent = "🎉 ¡Ganaste! La palabra era: " + currentWord;
+                    hangmanMessageEl.style.color = "#a3e4a3";
+                    hangmanInput.disabled = true;
+                    hangmanGuessBtn.disabled = true;
+                }
+            }
+
+            hangmanGuessBtn.addEventListener('click', handleHangmanGuess);
+            hangmanInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleHangmanGuess();
+            });
+            hangmanResetBtn.addEventListener('click', initHangman);
+
+            // Iniciar el juego al cargar
+            initHangman();
+
+            // ==================== JUEGO 2: MEMORIA (EMOJIS) ====================
+            const memoryGrid = document.getElementById('memoryGrid');
+            const memoryMessage = document.getElementById('memoryMessage');
+            const memoryResetBtn = document.getElementById('memoryResetBtn');
+
+            const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'];
+            let memoryCards = [];
+            let flippedIndices = [];
+            let matchedPairs = 0;
+            let lockBoard = false;
+
+            function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function initMemoryGame() {
+                // Reiniciar variables
+                flippedIndices = [];
+                matchedPairs = 0;
+                lockBoard = false;
+                memoryMessage.textContent = 'Encuentra las parejas';
+                memoryMessage.style.color = '#b9c2e0';
+
+                // Crear pares duplicados
+                let deck = [...emojis, ...emojis];
+                deck = shuffleArray(deck);
+
+                memoryCards = deck.map((emoji, index) => ({
+                    id: index,
+                    emoji: emoji,
+                    flipped: false,
+                    matched: false
+                }));
+
+                renderMemoryGrid();
+            }
+
+            function renderMemoryGrid() {
+                memoryGrid.innerHTML = '';
+                memoryCards.forEach((card, index) => {
+                    const cardEl = document.createElement('div');
+                    cardEl.className = 'memory-card';
+                    if (card.flipped) cardEl.classList.add('flipped');
+                    if (card.matched) cardEl.classList.add('matched');
+                    cardEl.textContent = card.flipped || card.matched ? card.emoji : '?';
+                    cardEl.dataset.index = index;
+                    cardEl.addEventListener('click', () => handleMemoryClick(index));
+                    memoryGrid.appendChild(cardEl);
+                });
+            }
+
+            function handleMemoryClick(index) {
+                if (lockBoard) return;
+                const card = memoryCards[index];
+                if (card.matched || card.flipped) return;
+                if (flippedIndices.includes(index)) return;
+
+                // Voltear carta
+                card.flipped = true;
+                flippedIndices.push(index);
+                renderMemoryGrid();
+
+                if (flippedIndices.length === 2) {
+                    lockBoard = true;
+                    const idx1 = flippedIndices[0];
+                    const idx2 = flippedIndices[1];
+                    const card1 = memoryCards[idx1];
+                    const card2 = memoryCards[idx2];
+
+                    if (card1.emoji === card2.emoji) {
+                        // Coincidencia
+                        card1.matched = true;
+                        card2.matched = true;
+                        card1.flipped = false;
+                        card2.flipped = false;
+                        matchedPairs++;
+                        renderMemoryGrid();
+                        memoryMessage.textContent = '¡Bien! Pareja encontrada 🎯';
+                        memoryMessage.style.color = '#a3e4a3';
+                        flippedIndices = [];
+                        lockBoard = false;
+
+                        if (matchedPairs === emojis.length) {
+                            memoryMessage.textContent = '🏆 ¡Felicidades! Completaste todas las parejas';
+                            memoryMessage.style.color = '#ffd966';
+                        }
+                    } else {
+                        // No coinciden: voltear de nuevo después de un tiempo
+                        memoryMessage.textContent = '❌ No coinciden, intenta de nuevo';
+                        memoryMessage.style.color = '#ffb3b3';
+                        setTimeout(() => {
+                            card1.flipped = false;
+                            card2.flipped = false;
+                            flippedIndices = [];
+                            renderMemoryGrid();
+                            lockBoard = false;
+                            memoryMessage.textContent = 'Encuentra las parejas';
+                            memoryMessage.style.color = '#b9c2e0';
+                        }, 700);
+                    }
+                }
+            }
+
+            memoryResetBtn.addEventListener('click', () => {
+                initMemoryGame();
+            });
+
+            // Iniciar juego de memoria
+            initMemoryGame();
+
+            // ==================== JUEGO 3: ADIVINANZA ====================
+            const riddles = [
+                { question: "¿Qué cosa es, que cuanto más grande, menos se ve?", answer: "La oscuridad" },
+                { question: "¿Cuál es el animal que tiene más dientes?", answer: "El ratón" },
+                { question: "¿Qué tiene manos pero no puede aplaudir?", answer: "El reloj" },
+                { question: "¿Cuántos meses tienen 28 días?", answer: "Todos" },
+                { question: "¿Qué se rompe al decir su nombre?", answer: "El silencio" },
+                { question: "¿Cuál es la fruta que no se puede comer?", answer: "La fruta prohibida" },
+                { question: "¿Qué sube pero nunca baja?", answer: "La edad" }
+            ];
+
+            let currentRiddle = null;
+
+            const riddleText = document.getElementById('riddleText');
+            const riddleMessage = document.getElementById('riddleMessage');
+            const riddleInput = document.getElementById('riddleInput');
+            const riddleCheckBtn = document.getElementById('riddleCheckBtn');
+            const riddleNewBtn = document.getElementById('riddleNewBtn');
+
+            function normalizeAnswer(text) {
+                return text.trim().toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quitar acentos
+                    .replace(/[^a-z0-9 ]/g, '');
+            }
+
+            function loadNewRiddle() {
+                const randomIndex = Math.floor(Math.random() * riddles.length);
+                currentRiddle = riddles[randomIndex];
+                riddleText.textContent = `🧩 ${currentRiddle.question}`;
+                riddleMessage.textContent = '';
+                riddleInput.value = '';
+                riddleInput.disabled = false;
+                riddleCheckBtn.disabled = false;
+            }
+
+            function checkRiddleAnswer() {
+                if (!currentRiddle) {
+                    riddleMessage.textContent = 'Primero presiona "Nueva" para obtener una adivinanza.';
+                    riddleMessage.style.color = '#ffb3b3';
+                    return;
+                }
+                const userAnswer = normalizeAnswer(riddleInput.value);
+                const correctAnswer = normalizeAnswer(currentRiddle.answer);
+
+                if (!userAnswer) {
+                    riddleMessage.textContent = '✏️ Escribe una respuesta.';
+                    riddleMessage.style.color = '#ffb3b3';
+                    return;
+                }
+
+                if (userAnswer === correctAnswer) {
+                    riddleMessage.textContent = '✅ ¡Correcto! ¡Eres muy listo!';
+                    riddleMessage.style.color = '#a3e4a3';
+                    riddleInput.disabled = true;
+                    riddleCheckBtn.disabled = true;
+                } else {
+                    riddleMessage.textContent = '❌ Incorrecto. Intenta de nuevo.';
+                    riddleMessage.style.color = '#ffb3b3';
+                }
+            }
+
+            riddleNewBtn.addEventListener('click', loadNewRiddle);
+            riddleCheckBtn.addEventListener('click', checkRiddleAnswer);
+            riddleInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkRiddleAnswer();
+            });
+
+            // Cargar primera adivinanza al inicio
+            loadNewRiddle();
+        })();
+    </script>
+</body>
+</html>
