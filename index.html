@@ -313,6 +313,94 @@
             text-align: center;
         }
 
+        .choice-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .choice-buttons .btn {
+            padding: 12px 16px;
+        }
+
+        .score {
+            color: #ffd966;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .game-picker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 auto 30px;
+        }
+
+        .game-picker select {
+            background: #0e1322;
+            border: 2px solid #2e3852;
+            border-radius: 50px;
+            padding: 12px 18px;
+            color: #ffd966;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .game-picker select:focus {
+            border-color: #ffb347;
+            box-shadow: 0 0 15px #ffb34750;
+        }
+
+        .tic-tac-toe {
+            display: grid;
+            grid-template-columns: repeat(3, 58px);
+            gap: 7px;
+            margin: 10px 0;
+        }
+
+        .tic-cell {
+            width: 58px;
+            height: 58px;
+            border: 1px solid #3e4a6b;
+            border-radius: 12px;
+            background: #232b48;
+            color: #ffd966;
+            cursor: pointer;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .tic-cell:hover:not(:disabled) {
+            background: #38405e;
+        }
+
+        .reaction-pad {
+            width: 100%;
+            min-height: 105px;
+            border: 0;
+            border-radius: 20px;
+            background: #2e3852;
+            color: #f0f3fa;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 18px;
+            font-size: 1rem;
+        }
+
+        .reaction-pad.ready {
+            background: #34c759;
+            color: #0b0f1c;
+        }
+
+        .games-grid .game-card {
+            display: none;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -384,8 +472,22 @@
         <!-- Hero -->
         <section class="hero">
             <h2>¿Listo para divertirte?</h2>
-            <p>Tres juegos rápidos para distraerte y pasar un buen rato. ¡Sin complicaciones!</p>
+            <p>Siete juegos rápidos para distraerte y pasar un buen rato. ¡Sin complicaciones!</p>
         </section>
+
+        <div class="game-picker">
+            <select id="gameSelect" aria-label="Selecciona un juego">
+                <option value="">Elige el nombre de un juego</option>
+                <option value="game-hangman">Ahorcado</option>
+                <option value="game-memory">Memoria</option>
+                <option value="game-riddle">Adivinanza</option>
+                <option value="game-rps">Piedra, papel o tijera</option>
+                <option value="game-number">Adivina el número</option>
+                <option value="game-tic-tac-toe">Tres en raya</option>
+                <option value="game-reaction">Reacción rápida</option>
+            </select>
+            <button class="btn btn-primary" id="openGameBtn"><i class="fas fa-play"></i> Abrir juego</button>
+        </div>
 
         <!-- Grid de juegos -->
         <div class="games-grid">
@@ -397,6 +499,7 @@
                 </div>
                 <div class="game-area">
                     <div class="word-display" id="hangmanWord">_ _ _ _ _</div>
+                    <div class="hint-box" id="hangmanHint">Pista: piensa en algo de la naturaleza</div>
                     <div class="message" id="hangmanMessage">Adivina la palabra secreta</div>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
                         <input type="text" id="hangmanInput" class="input-field" placeholder="Letra" maxlength="1" style="width: 100px; text-transform: uppercase;">
@@ -438,6 +541,67 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Juego 4: Piedra, papel o tijera -->
+            <div class="game-card" id="game-rps">
+                <div class="card-header">
+                    <i class="fas fa-hand-scissors"></i>
+                    <h3>Piedra, papel o tijera</h3>
+                </div>
+                <div class="game-area">
+                    <div class="message" id="rpsResult">Elige una opción</div>
+                    <div class="choice-buttons">
+                        <button class="btn" data-choice="piedra"><i class="fas fa-hand-rock"></i> Piedra</button>
+                        <button class="btn" data-choice="papel"><i class="fas fa-hand-paper"></i> Papel</button>
+                        <button class="btn" data-choice="tijera"><i class="fas fa-hand-scissors"></i> Tijera</button>
+                    </div>
+                    <div class="score" id="rpsScore">Tú 0 · Máquina 0</div>
+                </div>
+            </div>
+
+            <!-- Juego 5: Adivina el número -->
+            <div class="game-card" id="game-number">
+                <div class="card-header">
+                    <i class="fas fa-dice"></i>
+                    <h3>Adivina el número</h3>
+                </div>
+                <div class="game-area">
+                    <div class="message" id="numberMessage">He pensado un número del 1 al 20</div>
+                    <input type="number" id="numberInput" class="input-field" min="1" max="20" placeholder="1 - 20">
+                    <div>
+                        <button class="btn btn-primary" id="numberCheckBtn"><i class="fas fa-bullseye"></i> Probar</button>
+                        <button class="btn" id="numberResetBtn"><i class="fas fa-rotate-right"></i> Nuevo</button>
+                    </div>
+                    <div class="score" id="numberAttempts">Intentos: 0</div>
+                </div>
+            </div>
+
+            <!-- Juego 6: Tres en raya -->
+            <div class="game-card" id="game-tic-tac-toe">
+                <div class="card-header">
+                    <i class="fas fa-grip"></i>
+                    <h3>Tres en raya</h3>
+                </div>
+                <div class="game-area">
+                    <div class="tic-tac-toe" id="ticBoard"></div>
+                    <div class="message" id="ticMessage">Tú eres X. Elige una casilla.</div>
+                    <button class="btn" id="ticResetBtn"><i class="fas fa-rotate-right"></i> Reiniciar</button>
+                </div>
+            </div>
+
+            <!-- Juego 7: Reacción rápida -->
+            <div class="game-card" id="game-reaction">
+                <div class="card-header">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Reacción rápida</h3>
+                </div>
+                <div class="game-area">
+                    <div class="message" id="reactionMessage">Pulsa empezar y espera la señal</div>
+                    <button class="btn btn-primary" id="reactionStartBtn"><i class="fas fa-play"></i> Empezar</button>
+                    <button class="reaction-pad" id="reactionPad" disabled>Espera...</button>
+                    <div class="score" id="reactionBest">Mejor tiempo: --</div>
+                </div>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -457,6 +621,7 @@
 
             const hangmanWordEl = document.getElementById('hangmanWord');
             const hangmanMessageEl = document.getElementById('hangmanMessage');
+            const hangmanHintEl = document.getElementById('hangmanHint');
             const hangmanAttemptsEl = document.getElementById('hangmanAttempts');
             const hangmanInput = document.getElementById('hangmanInput');
             const hangmanGuessBtn = document.getElementById('hangmanGuessBtn');
@@ -469,6 +634,19 @@
                 attemptsLeft = 6;
                 gameOver = false;
                 updateHangmanDisplay();
+                const hints = {
+                    SOL: 'Pista: sin tocarlo, puede hacer que una sombra te siga',
+                    LUNA: 'Pista: cambia de aspecto, aunque siempre es la misma',
+                    ESTRELLA: 'Pista: algunos la usan para pedir deseos',
+                    CIELO: 'Pista: parece no tener límites, pero no se puede atravesar',
+                    MAR: 'Pista: guarda secretos bajo una superficie que nunca está quieta',
+                    FUEGO: 'Pista: transforma lo que toca y nunca conserva una forma fija',
+                    TIERRA: 'Pista: gira sin que lo notes y sostiene cada uno de tus pasos',
+                    VIENTO: 'Pista: mueve las hojas sin tener manos',
+                    NUBE: 'Pista: viaja sin pies y a veces cambia de color antes de llorar',
+                    FLOR: 'Pista: empieza pequeña y puede convertirse en un regalo'
+                };
+                hangmanHintEl.textContent = hints[currentWord];
                 hangmanMessageEl.textContent = "Adivina la palabra secreta";
                 hangmanMessageEl.style.color = "#b9c2e0";
                 hangmanInput.value = '';
@@ -740,6 +918,211 @@
 
             // Cargar primera adivinanza al inicio
             loadNewRiddle();
+
+            // ==================== JUEGO 4: PIEDRA, PAPEL O TIJERA ====================
+            const rpsChoices = ['piedra', 'papel', 'tijera'];
+            const rpsResult = document.getElementById('rpsResult');
+            const rpsScore = document.getElementById('rpsScore');
+            let playerScore = 0;
+            let machineScore = 0;
+
+            document.querySelectorAll('#game-rps [data-choice]').forEach(button => {
+                button.addEventListener('click', () => {
+                    const playerChoice = button.dataset.choice;
+                    const machineChoice = rpsChoices[Math.floor(Math.random() * rpsChoices.length)];
+                    let result = 'Empate';
+
+                    if (playerChoice !== machineChoice) {
+                        const playerWins = (playerChoice === 'piedra' && machineChoice === 'tijera') ||
+                            (playerChoice === 'papel' && machineChoice === 'piedra') ||
+                            (playerChoice === 'tijera' && machineChoice === 'papel');
+                        result = playerWins ? '¡Ganaste!' : 'Ganó la máquina';
+                        playerWins ? playerScore++ : machineScore++;
+                    }
+
+                    rpsResult.textContent = `${result} Tú: ${playerChoice} · Máquina: ${machineChoice}`;
+                    rpsResult.style.color = result === '¡Ganaste!' ? '#a3e4a3' : result === 'Empate' ? '#ffd966' : '#ffb3b3';
+                    rpsScore.textContent = `Tú ${playerScore} · Máquina ${machineScore}`;
+                });
+            });
+
+            // ==================== JUEGO 5: ADIVINA EL NÚMERO ====================
+            const numberInput = document.getElementById('numberInput');
+            const numberMessage = document.getElementById('numberMessage');
+            const numberAttempts = document.getElementById('numberAttempts');
+            const numberCheckBtn = document.getElementById('numberCheckBtn');
+            const numberResetBtn = document.getElementById('numberResetBtn');
+            let secretNumber;
+            let numberTryCount;
+
+            function initNumberGame() {
+                secretNumber = Math.floor(Math.random() * 20) + 1;
+                numberTryCount = 0;
+                numberInput.value = '';
+                numberInput.disabled = false;
+                numberCheckBtn.disabled = false;
+                numberMessage.textContent = 'He pensado un número del 1 al 20';
+                numberMessage.style.color = '#b9c2e0';
+                numberAttempts.textContent = 'Intentos: 0';
+            }
+
+            function checkNumber() {
+                const guess = Number(numberInput.value);
+                if (!Number.isInteger(guess) || guess < 1 || guess > 20) {
+                    numberMessage.textContent = 'Escribe un número entero del 1 al 20.';
+                    numberMessage.style.color = '#ffb3b3';
+                    return;
+                }
+
+                numberTryCount++;
+                numberAttempts.textContent = `Intentos: ${numberTryCount}`;
+                if (guess === secretNumber) {
+                    numberMessage.textContent = `🎉 ¡Correcto! Era el ${secretNumber}.`;
+                    numberMessage.style.color = '#a3e4a3';
+                    numberInput.disabled = true;
+                    numberCheckBtn.disabled = true;
+                } else {
+                    numberMessage.textContent = guess < secretNumber ? 'Es más grande ⬆️' : 'Es más pequeño ⬇️';
+                    numberMessage.style.color = '#ffd966';
+                    numberInput.select();
+                }
+            }
+
+            numberCheckBtn.addEventListener('click', checkNumber);
+            numberResetBtn.addEventListener('click', initNumberGame);
+            numberInput.addEventListener('keypress', event => {
+                if (event.key === 'Enter') checkNumber();
+            });
+            initNumberGame();
+
+            // ==================== JUEGO 6: TRES EN RAYA ====================
+            const ticBoard = document.getElementById('ticBoard');
+            const ticMessage = document.getElementById('ticMessage');
+            const ticResetBtn = document.getElementById('ticResetBtn');
+            let ticCells = [];
+            let ticGameOver = false;
+
+            function getWinner(cells) {
+                const lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+                return lines.some(([a, b, c]) => cells[a] && cells[a] === cells[b] && cells[a] === cells[c]);
+            }
+
+            function finishTicGame(message) {
+                ticGameOver = true;
+                ticMessage.textContent = message;
+                document.querySelectorAll('.tic-cell').forEach(cell => cell.disabled = true);
+            }
+
+            function machineTicMove() {
+                const available = ticCells.map((cell, index) => cell ? null : index).filter(index => index !== null);
+                if (!available.length) return;
+                const move = available[Math.floor(Math.random() * available.length)];
+                ticCells[move] = 'O';
+                renderTicBoard();
+                if (getWinner(ticCells)) finishTicGame('Gana la máquina. ¡Inténtalo de nuevo!');
+                else if (ticCells.every(Boolean)) finishTicGame('Empate.');
+            }
+
+            function handleTicMove(index) {
+                if (ticGameOver || ticCells[index]) return;
+                ticCells[index] = 'X';
+                renderTicBoard();
+                if (getWinner(ticCells)) {
+                    finishTicGame('🎉 ¡Ganaste!');
+                } else if (ticCells.every(Boolean)) {
+                    finishTicGame('Empate.');
+                } else {
+                    ticMessage.textContent = 'Turno de la máquina...';
+                    setTimeout(machineTicMove, 350);
+                }
+            }
+
+            function renderTicBoard() {
+                ticBoard.innerHTML = '';
+                ticCells.forEach((value, index) => {
+                    const cell = document.createElement('button');
+                    cell.className = 'tic-cell';
+                    cell.textContent = value || '';
+                    cell.disabled = Boolean(value) || ticGameOver;
+                    cell.addEventListener('click', () => handleTicMove(index));
+                    ticBoard.appendChild(cell);
+                });
+            }
+
+            function initTicGame() {
+                ticCells = Array(9).fill('');
+                ticGameOver = false;
+                ticMessage.textContent = 'Tú eres X. Elige una casilla.';
+                renderTicBoard();
+            }
+
+            ticResetBtn.addEventListener('click', initTicGame);
+            initTicGame();
+
+            // ==================== JUEGO 7: REACCIÓN RÁPIDA ====================
+            const reactionMessage = document.getElementById('reactionMessage');
+            const reactionStartBtn = document.getElementById('reactionStartBtn');
+            const reactionPad = document.getElementById('reactionPad');
+            const reactionBest = document.getElementById('reactionBest');
+            let reactionTimer;
+            let reactionStartTime;
+            let reactionWaiting = false;
+            let bestReaction = null;
+
+            reactionStartBtn.addEventListener('click', () => {
+                clearTimeout(reactionTimer);
+                reactionWaiting = true;
+                reactionStartBtn.disabled = true;
+                reactionPad.disabled = false;
+                reactionPad.classList.remove('ready');
+                reactionPad.textContent = 'Espera la señal verde...';
+                reactionMessage.textContent = 'No pulses todavía';
+                reactionMessage.style.color = '#ffd966';
+                reactionTimer = setTimeout(() => {
+                    reactionWaiting = false;
+                    reactionStartTime = performance.now();
+                    reactionPad.classList.add('ready');
+                    reactionPad.textContent = '¡PULSA AHORA!';
+                    reactionMessage.textContent = '¡Ahora!';
+                }, 1200 + Math.random() * 2500);
+            });
+
+            reactionPad.addEventListener('click', () => {
+                if (reactionWaiting) {
+                    clearTimeout(reactionTimer);
+                    reactionMessage.textContent = 'Demasiado pronto. ¡Concéntrate!';
+                    reactionMessage.style.color = '#ffb3b3';
+                    reactionPad.disabled = true;
+                    reactionStartBtn.disabled = false;
+                    return;
+                }
+                const reactionTime = Math.round(performance.now() - reactionStartTime);
+                bestReaction = bestReaction === null ? reactionTime : Math.min(bestReaction, reactionTime);
+                reactionMessage.textContent = `Tu tiempo: ${reactionTime} ms`;
+                reactionMessage.style.color = '#a3e4a3';
+                reactionBest.textContent = `Mejor tiempo: ${bestReaction} ms`;
+                reactionPad.disabled = true;
+                reactionPad.classList.remove('ready');
+                reactionStartBtn.disabled = false;
+                reactionPad.textContent = 'Pulsa empezar para repetir';
+            });
+
+            // ==================== SELECTOR DE JUEGOS ====================
+            const gameSelect = document.getElementById('gameSelect');
+            const openGameBtn = document.getElementById('openGameBtn');
+            const gameCards = document.querySelectorAll('.game-card');
+
+            function openSelectedGame() {
+                if (!gameSelect.value) return;
+                gameCards.forEach(card => {
+                    card.style.display = card.id === gameSelect.value ? 'flex' : 'none';
+                });
+                document.getElementById(gameSelect.value).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            openGameBtn.addEventListener('click', openSelectedGame);
+            gameSelect.addEventListener('change', openSelectedGame);
+
         })();
     </script>
 </body>
